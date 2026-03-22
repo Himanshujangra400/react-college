@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
+
 function SignUp() {
   const [form, setForm] = useState({
     name: "",
@@ -27,15 +28,24 @@ function SignUp() {
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
       <Navbar />
 
-      {/* Main */}
-      <div className="flex justify-center px-6 py-20">
-        <div className="w-full max-w-md rounded-3xl border border-slate-100 bg-white p-10 shadow-xl">
+      <div className="flex justify-center px-4 py-12 sm:px-6 sm:py-20">
+        <div className="w-full max-w-md rounded-3xl border border-slate-100 bg-white p-6 shadow-xl sm:p-10">
+          <div className="mb-6 flex flex-wrap gap-2">
+            <span className="rounded-full bg-blue-50 px-3 py-1 text-xs font-bold uppercase tracking-[0.16em] text-blue-700">
+              New Creator
+            </span>
+            <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-500">
+              Join 142 live portfolios
+            </span>
+          </div>
+
           <div className="mb-8 text-center">
-            <h1 className="mb-2 text-3xl font-extrabold text-[#112D4E]">
+            <h1 className="mb-2 text-2xl font-extrabold text-[#112D4E] sm:text-3xl">
               Create Account
             </h1>
             <p className="font-medium text-slate-400">
-              Join EduVault and start building your portfolio
+              Join EduVault and start building a portfolio that looks ready to
+              share.
             </p>
           </div>
 
@@ -106,7 +116,7 @@ function SignUp() {
               type="submit"
               className="w-full rounded-2xl bg-blue-600 py-4 text-lg font-bold text-white transition hover:bg-blue-700"
             >
-              Sign Up
+              Create EduVault Account
             </button>
           </form>
 

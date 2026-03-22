@@ -5,17 +5,13 @@ function NotData() {
   const navigate = useNavigate();
 
   return (
-    <div className="bg-gray-50 min-h-screen flex flex-col">
-
+    <div className="flex min-h-screen flex-col bg-gray-50">
       <Navbar />
 
       <div className="flex flex-1 items-center justify-center p-6">
-
-        <div className="max-w-md w-full text-center">
-
-          {/* SVG */}
+        <div className="w-full max-w-md text-center">
           <div className="mb-8 flex justify-center">
-            <svg className="w-64 h-64 text-gray-300" viewBox="0 0 200 200" fill="none">
+            <svg className="h-64 w-64 text-gray-300" viewBox="0 0 200 200" fill="none">
               <circle cx="100" cy="100" r="80" fill="#F3F4F6" stroke="currentColor" strokeWidth="2" strokeDasharray="8 8" />
               <rect x="70" y="80" width="60" height="40" rx="4" fill="white" stroke="currentColor" strokeWidth="2" />
               <line x1="80" y1="95" x2="120" y2="95" stroke="currentColor" strokeWidth="2" />
@@ -26,44 +22,47 @@ function NotData() {
             </svg>
           </div>
 
-          {/* Text */}
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+          <div className="mb-4 flex flex-wrap justify-center gap-2">
+            <span className="rounded-full bg-blue-50 px-3 py-1 text-xs font-bold uppercase tracking-[0.16em] text-blue-700">
+              Not Live Yet
+            </span>
+            <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-500">
+              Checked today
+            </span>
+          </div>
+
+          <h1 className="mb-2 text-3xl font-bold text-gray-900">
             Data not found
           </h1>
 
-          <p className="text-gray-600 mb-8">
-            We couldn't find the information you're looking for.
+          <p className="mb-8 text-gray-600">
+            This page is not public yet. That usually means the department has
+            not published portfolios or marketplace listings for this section.
           </p>
 
-          {/* Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-
+          <div className="flex flex-col justify-center gap-4 sm:flex-row">
             <button
               onClick={() => navigate(-1)}
-              className="px-6 py-3 bg-white border text-gray-700 rounded-xl hover:bg-gray-50"
+              className="rounded-xl border bg-white px-6 py-3 text-gray-700 hover:bg-gray-50"
             >
               Go Back
             </button>
 
             <button
               onClick={() => navigate("/")}
-              className="px-6 py-3 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700"
+              className="rounded-xl bg-indigo-600 px-6 py-3 text-white hover:bg-indigo-700"
             >
               Return Home
             </button>
-
           </div>
 
-          {/* Help */}
           <p className="mt-10 text-sm text-gray-400">
             Need help?{" "}
-            <span className="text-indigo-500 hover:underline cursor-pointer">
+            <span className="cursor-pointer text-indigo-500 hover:underline">
               Contact Support
             </span>
           </p>
-
         </div>
-
       </div>
     </div>
   );

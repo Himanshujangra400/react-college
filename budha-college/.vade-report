@@ -1,0 +1,45 @@
+# Vercel Web Analytics Configuration
+
+## Summary
+Configured Vercel Web Analytics for this Vite + React project by correcting the import paths to use the framework-specific React export.
+
+## Changes Made
+
+### Modified Files:
+
+1. **src/main.jsx**
+   - Changed import from `@vercel/analytics/next` to `@vercel/analytics/react`
+   - This is the correct import path for React/Vite projects according to the official Vercel documentation
+   - The Analytics component is properly placed within the StrictMode wrapper
+
+2. **src/App.jsx**
+   - Removed duplicate import of Analytics component
+   - The component is already imported and rendered in main.jsx, so no need for duplication
+
+## Implementation Details
+
+The `@vercel/analytics` package (v2.0.1) was already installed in the project dependencies. However, it was using the wrong import path:
+- ❌ Old: `import { Analytics } from "@vercel/analytics/next"` (Next.js specific)
+- ✅ New: `import { Analytics } from "@vercel/analytics/react"` (React/Vite specific)
+
+According to the latest Vercel documentation (https://vercel.com/docs/analytics/quickstart):
+- `/next` export is specifically for Next.js applications
+- `/react` export is for React applications including Vite, Create React App, etc.
+
+The Analytics component is now correctly configured and placed in the root of the application (src/main.jsx), which will track page views and user interactions across all routes.
+
+## Verification
+
+✅ Linting: No errors
+✅ Build: Successful (vite build completed in 451ms)
+✅ Dependencies: All packages installed and up to date
+
+## Next Steps for Deployment
+
+To enable analytics data collection on Vercel:
+1. Deploy the application to Vercel using `vercel deploy`
+2. Enable Web Analytics in the Vercel project dashboard
+3. After deployment, analytics data will be collected automatically
+4. View analytics in the Vercel dashboard under the Analytics tab
+
+The implementation follows the official Vercel documentation and best practices for React applications.

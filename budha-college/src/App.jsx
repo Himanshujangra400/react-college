@@ -12,6 +12,7 @@ import Products from "./pages/Products";
 import StudentPortfolio from "./pages/StudentPortfolio";
 import Students from "./pages/Students";
 import TopStudents from "./pages/TopStudents";
+import { Analytics } from "@vercel/analytics/next"
 
 function App() {
   return (

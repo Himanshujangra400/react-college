@@ -1,73 +1,54 @@
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { getStudents, getTopStudents } from "../lib/api";
 
 function TopStudents() {
-  const topStudents = [
-    {
-      rank: 1,
-      name: "Gavi",
-      img: "https://i.ibb.co/yJk2vVn/1510f7e5-11ae-4eb9-8c01-b361ed4fd1a1.jpg",
-      sales: "12 Sales",
-      earning: "Rs. 4,800",
-      projects: "4 projects live",
-      badge: "Top Seller",
-      updated: "Updated today",
-      id: "gavi",
-    },
-    {
-      rank: 2,
-      name: "Robin",
-      img: "https://i.ibb.co/kVhTqPpb/IMG-20250515-101417-1.jpg",
-      sales: "5 Sales",
-      earning: "Rs. 1,450",
-      projects: "2 projects live",
-      badge: "Rising",
-      updated: "Updated yesterday",
-      id: "robin",
-    },
-    {
-      rank: 3,
-      name: "Himanshu",
-      img: "https://i.ibb.co/4Zf8zCRG/Whats-App-Image-2025-05-15-at-10-16-38-AM.jpg",
-      sales: "3 Sales",
-      earning: "Rs. 980",
-      projects: "2 projects live",
-      badge: "Verified",
-      updated: "Updated 2 days ago",
-      id: "himanshu",
-    },
-  ];
+  const [topStudents, setTopStudents] = useState([]);
+  const [students, setStudents] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-  const students = [
-    {
-      name: "Gavi",
-      dept: "BCA",
-      skills: "React | AI",
-      img: "https://i.ibb.co/yJk2vVn/1510f7e5-11ae-4eb9-8c01-b361ed4fd1a1.jpg",
-      note: "4 projects live",
-    },
-    {
-      name: "Arju Sharma",
-      dept: "BCA",
-      skills: "Python | ML",
-      img: "https://i.ibb.co/hRQdkBh7/Whats-App-Image-2025-05-15-at-11-49-46-AM.jpg",
-      note: "Rising this week",
-    },
-    {
-      name: "Gurmer",
-      dept: "BCA",
-      skills: "Java | DSA",
-      img: "https://i.ibb.co/svzNYHYy/9bbd2070-ddf0-4ebc-92ba-f695c16ea947.jpg",
-      note: "3 sales this term",
-    },
-    {
-      name: "Robin",
-      dept: "BCA",
-      skills: "React | JS",
-      img: "https://i.ibb.co/kVhTqPpb/IMG-20250515-101417-1.jpg",
-      note: "Updated yesterday",
-    },
-  ];
+  useEffect(() => {
+    let active = true;
+
+    const loadData = async () => {
+      try {
+        setLoading(true);
+        setError("");
+        const [topResponse, studentsResponse] = await Promise.all([
+          getTopStudents(),
+          getStudents(""),
+        ]);
+
+        if (active) {
+          setTopStudents(topResponse.data || []);
+          setStudents((studentsResponse.data || []).map((student) => ({
+            name: student.name,
+            dept: student.department,
+            skills: student.skill,
+            img: student.img,
+            note: student.activity,
+          })));
+        }
+      } catch (requestError) {
+        if (active) {
+          setError(requestError.message);
+        }
+      } finally {
+        if (active) {
+          setLoading(false);
+        }
+      }
+    };
+
+    loadData();
+
+    return () => {
+      active = false;
+    };
+  }, []);
 
   return (
     <div className="flex min-h-screen flex-col bg-[#F8FAFF]">
@@ -81,6 +62,9 @@ function TopStudents() {
           Top performing students from Budha College, ranked by activity,
           portfolio quality, and marketplace traction.
         </p>
+
+        {error ? <p className="mb-6 text-red-600">{error}</p> : null}
+        {loading ? <p className="mb-6 text-slate-500">Loading student rankings...</p> : null}
 
         <div className="mb-16 grid gap-6 md:grid-cols-3">
           {topStudents.map((student, index) => (
@@ -114,12 +98,12 @@ function TopStudents() {
                 <p className="mt-2 text-sm text-slate-500">{student.projects}</p>
               </div>
 
-              <a
-                href={`/portfolio/${student.id}`}
+              <Link
+                to={`/portfolio/${student.id}`}
                 className="mt-4 block rounded-lg bg-blue-600 py-2.5 font-semibold text-white"
               >
                 View Portfolio
-              </a>
+              </Link>
             </div>
           ))}
         </div>

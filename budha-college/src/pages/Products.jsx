@@ -1,62 +1,45 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { getProducts } from "../lib/api";
 
 function Products() {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All");
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-  const products = [
-    {
-      id: 1,
-      title: "SaaS Admin Dashboard",
-      cat: "Web Development",
-      price: "Rs. 499",
-      seller: "Gavi",
-      college: "Budha College",
-      img: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=600",
-      studentImg: "https://i.pravatar.cc/100?img=1",
-      badge: "Top Seller",
-      sales: "12 sales",
-      update: "Updated today",
-      note: "Used by 3 student teams this month",
-    },
-    {
-      id: 2,
-      title: "AI Assistant Interface",
-      cat: "AI / ML",
-      price: "Rs. 899",
-      seller: "Devansh",
-      college: "Budha College",
-      img: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600",
-      studentImg: "https://i.pravatar.cc/100?img=2",
-      badge: "Rising",
-      sales: "7 sales",
-      update: "Updated 2 days ago",
-      note: "Prompt flows and UI kit included",
-    },
-    {
-      id: 3,
-      title: "Floral Summer Dress",
-      cat: "Fashion Design",
-      price: "Rs. 249",
-      seller: "Vanshika",
-      college: "Budha College",
-      img: "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?w=600",
-      studentImg: "https://i.pravatar.cc/100?img=3",
-      badge: "Verified",
-      sales: "3 sales",
-      update: "Updated yesterday",
-      note: "Most saved fashion listing this week",
-    },
-  ];
+  useEffect(() => {
+    let active = true;
 
-  const filteredProducts = products.filter(
-    (product) =>
-      (category === "All" || product.cat === category) &&
-      (product.title.toLowerCase().includes(search.toLowerCase()) ||
-        product.seller.toLowerCase().includes(search.toLowerCase()))
-  );
+    const loadProducts = async () => {
+      try {
+        setLoading(true);
+        setError("");
+        const response = await getProducts({ search, category });
+        if (active) {
+          setProducts(response.data || []);
+        }
+      } catch (requestError) {
+        if (active) {
+          setError(requestError.message);
+        }
+      } finally {
+        if (active) {
+          setLoading(false);
+        }
+      }
+    };
+
+    loadProducts();
+
+    return () => {
+      active = false;
+    };
+  }, [search, category]);
+
+  const categories = ["All", "Web Development", "Fashion Design", "AI / ML"];
 
   return (
     <div className="flex min-h-screen flex-col bg-[#F8FAFF]">
@@ -81,7 +64,7 @@ function Products() {
         </div>
 
         <div className="mb-8 flex gap-4 overflow-x-auto pb-2">
-          {["All", "Web Development", "Fashion Design", "AI / ML"].map((item) => (
+          {categories.map((item) => (
             <button
               key={item}
               onClick={() => setCategory(item)}
@@ -96,8 +79,16 @@ function Products() {
           ))}
         </div>
 
+        {error ? (
+          <p className="rounded-xl bg-red-50 p-4 text-red-600">{error}</p>
+        ) : null}
+
+        {loading ? (
+          <p className="text-slate-500">Loading products...</p>
+        ) : null}
+
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {filteredProducts.map((product, index) => (
+          {products.map((product, index) => (
             <div
               key={product.id}
               className={`rounded-2xl bg-white p-4 shadow ${
@@ -152,6 +143,10 @@ function Products() {
             </div>
           ))}
         </div>
+
+        {!loading && products.length === 0 ? (
+          <p className="mt-6 text-slate-500">No products found for this filter.</p>
+        ) : null}
       </div>
 
       <Footer />

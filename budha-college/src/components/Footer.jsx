@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 function Footer() {
   return (
     <footer className="bg-slate-900 px-6 pb-8 pt-16 text-slate-300">
@@ -34,20 +36,20 @@ function Footer() {
         <div>
           <h3 className="mb-4 font-semibold text-white">Quick Links</h3>
           <ul className="space-y-3 text-sm">
-            <li><a href="/" className="transition hover:text-white">Home</a></li>
-            <li><a href="/products" className="transition hover:text-white">Student Marketplace</a></li>
-            <li><a href="/top-students" className="transition hover:text-white">Student Leaderboard</a></li>
-            <li><a href="/colleges" className="transition hover:text-white">Partner Colleges</a></li>
+            <li><Link to="/" className="transition hover:text-white">Home</Link></li>
+            <li><Link to="/products" className="transition hover:text-white">Student Marketplace</Link></li>
+            <li><Link to="/top-students" className="transition hover:text-white">Student Leaderboard</Link></li>
+            <li><Link to="/colleges" className="transition hover:text-white">Partner Colleges</Link></li>
           </ul>
         </div>
 
         <div>
           <h3 className="mb-4 font-semibold text-white">For Institutions</h3>
           <ul className="space-y-3 text-sm">
-            <li><a href="/department" className="transition hover:text-white">Department Directory</a></li>
-            <li><a href="/portfolio" className="transition hover:text-white">Portfolio Builder</a></li>
-            <li><a href="/students" className="transition hover:text-white">Student Profiles</a></li>
-            <li><a href="/signup" className="transition hover:text-white">Start Campus Pilot</a></li>
+            <li><Link to="/department" className="transition hover:text-white">Department Directory</Link></li>
+            <li><Link to="/portfolio" className="transition hover:text-white">Portfolio Builder</Link></li>
+            <li><Link to="/students" className="transition hover:text-white">Student Profiles</Link></li>
+            <li><Link to="/signup" className="transition hover:text-white">Start Campus Pilot</Link></li>
           </ul>
         </div>
 

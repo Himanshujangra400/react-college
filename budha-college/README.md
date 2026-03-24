@@ -1,16 +1,56 @@
-# React + Vite
+# EduVault (Budha College)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Frontend + backend portfolio marketplace app for students and colleges.
 
-Currently, two official plugins are available:
+## Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Frontend: React + Vite + Tailwind
+- Backend: Node.js + Express
+- Data: JSON file store (`backend/data/store.json`)
 
-## React Compiler
+## Run Frontend
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```bash
+npm install
+npm run dev
+```
 
-## Expanding the ESLint configuration
+Frontend runs on `http://localhost:5173`.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Run Backend
+
+```bash
+cd backend
+npm install
+npm run dev
+```
+
+Backend runs on `http://localhost:5000`.
+
+## Environment
+
+Frontend uses this API URL by default:
+
+- `http://localhost:5000/api`
+
+If needed, create a `.env` file in project root:
+
+```bash
+VITE_API_URL=http://localhost:5000/api
+```
+
+## Available API Routes
+
+- `GET /api/health`
+- `GET /api/products?search=&category=`
+- `GET /api/students?search=`
+- `GET /api/top-students`
+- `GET /api/portfolios/:id`
+- `POST /api/portfolios`
+- `POST /api/auth/signup`
+- `POST /api/auth/login`
+
+## Notes
+
+- Auth is demo-style (plain password storage) for development only.
+- Data persists in `backend/data/store.json`.

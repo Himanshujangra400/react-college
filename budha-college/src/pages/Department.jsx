@@ -1,4 +1,5 @@
 import Navbar from "../components/Navbar";
+import { Link } from "react-router-dom";
 
 function Department() {
   const departments = [
@@ -143,11 +144,11 @@ function Department() {
                   </span>
                 </div>
 
-                <a href={department.link}>
+                <Link to={department.link}>
                   <button className="w-full rounded-xl bg-blue-600 py-3 font-semibold text-white hover:bg-blue-700">
                     {department.btn}
                   </button>
-                </a>
+                </Link>
               </div>
             ))}
           </div>
@@ -162,11 +163,11 @@ function Department() {
             climbing the leaderboard this week.
           </p>
 
-          <a href="/top-students">
+          <Link to="/top-students">
             <button className="w-full rounded-xl bg-white px-10 py-4 font-semibold text-blue-600 shadow-sm sm:w-auto">
               View Student Leaderboard
             </button>
-          </a>
+          </Link>
         </section>
       </main>
     </div>

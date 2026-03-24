@@ -1,92 +1,59 @@
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-
-const portfolioData = {
-  gavi: {
-    name: "Gavi",
-    role: "AI & Frontend Developer",
-    college: "Budha College",
-    bio: "I build student-first products with fast React interfaces, practical AI integrations, and clean portfolio storytelling that non-technical reviewers can actually follow.",
-    profileImg: "https://i.ibb.co/yJk2vVn/1510f7e5-11ae-4eb9-8c01-b361ed4fd1a1.jpg",
-    stats: ["4 projects live", "12 sales", "Rs. 4,800 earned"],
-    projects: [
-      {
-        id: 1,
-        title: "SaaS Admin Dashboard",
-        desc: "A clean admin workflow with billing states, user tables, and real status handling.",
-        img: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=600",
-        meta: "Top Seller | Updated today",
-      },
-      {
-        id: 2,
-        title: "AI Campus Assistant",
-        desc: "AI-powered student support assistant built for department FAQs and admission queries.",
-        img: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600",
-        meta: "7 saves this week | 3 sales",
-      },
-    ],
-  },
-  arju: {
-    name: "Arju Sharma",
-    role: "Python & ML Developer",
-    college: "Budha College",
-    bio: "I enjoy turning messy datasets into products that feel simple. Most of my recent work blends machine learning with practical dashboards and review-friendly writeups.",
-    profileImg: "https://i.ibb.co/hRQdkBh7/Whats-App-Image-2025-05-15-at-11-49-46-AM.jpg",
-    stats: ["3 projects live", "5 sales", "Rs. 2,100 earned"],
-    projects: [
-      {
-        id: 1,
-        title: "Attendance Prediction Model",
-        desc: "Predictive workflow for student attendance trends with export-ready charts.",
-        img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600",
-        meta: "Rising | Updated yesterday",
-      },
-      {
-        id: 2,
-        title: "ML Hiring Screen",
-        desc: "A small ML screening demo that helps shortlist profiles faster for campus roles.",
-        img: "https://images.unsplash.com/photo-1526379095098-d400fd0bf935?w=600",
-        meta: "2 live reviews | 2 sales",
-      },
-    ],
-  },
-  himanshu: {
-    name: "Himanshu",
-    role: "Full Stack Developer",
-    college: "Budha College",
-    bio: "Passionate about building modern web apps that are easy to use, easy to demo, and polished enough to show up well in recruiter reviews.",
-    profileImg: "https://i.ibb.co/4Zf8zCRG/Whats-App-Image-2025-05-15-at-10-16-38-AM.jpg",
-    stats: ["2 projects live", "3 sales", "Rs. 980 earned"],
-    projects: [
-      {
-        id: 1,
-        title: "E-Commerce Website",
-        desc: "Full-stack shopping platform with product management, cart flow, and payment integration.",
-        img: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600",
-        meta: "Verified | Updated 2 days ago",
-      },
-      {
-        id: 2,
-        title: "AI Chatbot",
-        desc: "AI-powered chatbot with conversation history, prompt refinement, and clean UI states.",
-        img: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600",
-        meta: "2 sales | 14 saves",
-      },
-    ],
-  },
-};
+import { getPortfolio } from "../lib/api";
 
 function StudentPortfolio() {
   const { id } = useParams();
+  const [student, setStudent] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-  const student = portfolioData[id] || portfolioData.himanshu;
+  useEffect(() => {
+    let active = true;
+
+    const loadPortfolio = async () => {
+      try {
+        setLoading(true);
+        setError("");
+        const response = await getPortfolio(id || "himanshu");
+        if (active) {
+          setStudent(response.data);
+        }
+      } catch (requestError) {
+        if (active) {
+          setError(requestError.message);
+          setStudent(null);
+        }
+      } finally {
+        if (active) {
+          setLoading(false);
+        }
+      }
+    };
+
+    loadPortfolio();
+
+    return () => {
+      active = false;
+    };
+  }, [id]);
 
   return (
     <div className="flex min-h-screen flex-col bg-[#F8FAFF]">
       <Navbar />
 
       <div className="mx-auto max-w-5xl flex-1 px-4 py-8 sm:px-6 sm:py-10">
+        {error ? <p className="mb-6 rounded-xl bg-red-50 p-4 text-red-600">{error}</p> : null}
+        {loading ? <p className="mb-6 text-slate-500">Loading portfolio...</p> : null}
+
+        {!student && !loading ? (
+          <p className="mb-6 rounded-xl bg-slate-100 p-4 text-slate-600">Portfolio not available.</p>
+        ) : null}
+
+        {student ? (
+          <>
         <div className="mb-8 flex flex-wrap items-start gap-4 rounded-2xl bg-white p-5 shadow sm:items-center sm:p-6">
           <img
             src={student.profileImg}
@@ -166,6 +133,8 @@ function StudentPortfolio() {
             ))}
           </div>
         </div>
+          </>
+        ) : null}
       </div>
 
       <Footer />

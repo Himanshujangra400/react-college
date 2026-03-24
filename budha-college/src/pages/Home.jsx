@@ -1,5 +1,6 @@
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
+import { Link } from "react-router-dom";
 
 const heroHighlights = [
   "142 student portfolios are live this term",
@@ -81,17 +82,17 @@ function Home() {
             </p>
 
             <div className="mt-10 flex flex-col gap-3 sm:mt-12 sm:flex-row sm:flex-wrap sm:gap-4">
-              <a href="/portfolio" className="w-full sm:w-auto">
+              <Link to="/portfolio" className="w-full sm:w-auto">
                 <button className="w-full rounded-xl bg-blue-600 px-8 py-4 font-bold text-white shadow-[0_14px_28px_rgba(37,99,235,0.22)] transition hover:scale-[1.01] hover:bg-blue-700">
                   Create Portfolio
                 </button>
-              </a>
+              </Link>
 
-              <a href="/department" className="w-full sm:w-auto">
+              <Link to="/department" className="w-full sm:w-auto">
                 <button className="w-full rounded-xl border border-slate-200 px-8 py-4 font-bold text-slate-700 transition hover:bg-slate-50">
                   Explore Student Work
                 </button>
-              </a>
+              </Link>
             </div>
 
             <div className="mt-8 space-y-2">
@@ -183,11 +184,11 @@ function Home() {
           Most students go live with their first portfolio in under 15 minutes.
         </p>
 
-        <a href="/signup">
+        <Link to="/signup">
           <button className="mt-8 w-full rounded-xl bg-white px-8 py-4 font-bold text-blue-600 shadow-[0_14px_26px_rgba(15,23,42,0.18)] sm:w-auto">
             Start Your Portfolio
           </button>
-        </a>
+        </Link>
       </section>
 
       <Footer />

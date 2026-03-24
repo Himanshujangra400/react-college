@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
+import { login } from "../lib/api";
 
 function Login() {
   const [form, setForm] = useState({
@@ -8,6 +10,9 @@ function Login() {
     password: "",
     remember: false,
   });
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -18,9 +23,26 @@ function Login() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(form);
+    setError("");
+    setMessage("");
+
+    try {
+      setLoading(true);
+      const response = await login({
+        email: form.email,
+        password: form.password,
+      });
+
+      localStorage.setItem("eduvaultUser", JSON.stringify(response.user));
+      localStorage.setItem("eduvaultToken", response.token);
+      setMessage(response.message);
+    } catch (requestError) {
+      setError(requestError.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -85,17 +107,21 @@ function Login() {
 
             <button
               type="submit"
+              disabled={loading}
               className="w-full rounded-2xl bg-blue-600 py-4 text-lg font-bold text-white hover:bg-blue-700"
             >
-              Continue to Dashboard
+              {loading ? "Signing in..." : "Continue to Dashboard"}
             </button>
           </form>
 
+          {error ? <p className="mt-4 text-sm font-semibold text-red-600">{error}</p> : null}
+          {message ? <p className="mt-4 text-sm font-semibold text-green-600">{message}</p> : null}
+
           <div className="mt-6 text-center text-sm">
             <span className="text-slate-400">Don't have an account?</span>
-            <a href="/signup" className="ml-1 font-bold text-blue-600 hover:underline">
+            <Link to="/signup" className="ml-1 font-bold text-blue-600 hover:underline">
               Create one
-            </a>
+            </Link>
           </div>
         </div>
       </div>

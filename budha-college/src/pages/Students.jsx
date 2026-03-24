@@ -1,90 +1,43 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { getStudents } from "../lib/api";
 
 function Students() {
   const [search, setSearch] = useState("");
+  const [students, setStudents] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-  const students = [
-    {
-      id: "gavi",
-      name: "Gavi",
-      skill: "AI | Web Development",
-      img: "https://i.ibb.co/yJk2vVn/1510f7e5-11ae-4eb9-8c01-b361ed4fd1a1.jpg",
-      department: "BCA",
-      projects: "4 projects live",
-      sales: "12 sales",
-      earnings: "Rs. 4,800 earned",
-      status: "Top Seller",
-      activity: "Active now",
-    },
-    {
-      id: "arju",
-      name: "Arju Sharma",
-      skill: "Python | Machine Learning",
-      img: "https://i.ibb.co/hRQdkBh7/Whats-App-Image-2025-05-15-at-11-49-46-AM.jpg",
-      department: "BCA",
-      projects: "3 projects live",
-      sales: "5 sales",
-      earnings: "Rs. 2,100 earned",
-      status: "Rising",
-      activity: "Updated yesterday",
-    },
-    {
-      id: "gurmer",
-      name: "Gurmer",
-      skill: "Java | Data Structures",
-      img: "https://i.ibb.co/svzNYHYy/9bbd2070-ddf0-4ebc-92ba-f695c16ea947.jpg",
-      department: "BCA",
-      projects: "2 projects live",
-      sales: "3 sales",
-      earnings: "Rs. 1,050 earned",
-      status: "Verified",
-      activity: "Updated 2 days ago",
-    },
-    {
-      id: "himanshu",
-      name: "Himanshu",
-      skill: "C++ | HTML | CSS",
-      img: "https://i.ibb.co/4Zf8zCRG/Whats-App-Image-2025-05-15-at-10-16-38-AM.jpg",
-      department: "BCA",
-      projects: "2 projects live",
-      sales: "2 sales",
-      earnings: "Rs. 900 earned",
-      status: "Verified",
-      activity: "Updated today",
-    },
-    {
-      id: "devansh",
-      name: "Devansh",
-      skill: "Full Stack Development",
-      img: "https://i.ibb.co/jv5f9YRB/3ffbfc35-bc30-4ed4-8eb9-f923f8f1638a.jpg",
-      department: "BCA",
-      projects: "3 projects live",
-      sales: "7 sales",
-      earnings: "Rs. 3,250 earned",
-      status: "Rising",
-      activity: "Updated 3 days ago",
-    },
-    {
-      id: "robin",
-      name: "Robin",
-      skill: "React | JavaScript",
-      img: "https://i.ibb.co/kVhTqPpb/IMG-20250515-101417-1.jpg",
-      department: "BCA",
-      projects: "1 project live",
-      sales: "1 sale",
-      earnings: "Rs. 350 earned",
-      status: "New",
-      activity: "Just joined marketplace",
-    },
-  ];
+  useEffect(() => {
+    let active = true;
 
-  const filtered = students.filter(
-    (student) =>
-      student.name.toLowerCase().includes(search.toLowerCase()) ||
-      student.skill.toLowerCase().includes(search.toLowerCase())
-  );
+    const loadStudents = async () => {
+      try {
+        setLoading(true);
+        setError("");
+        const response = await getStudents(search);
+        if (active) {
+          setStudents(response.data || []);
+        }
+      } catch (requestError) {
+        if (active) {
+          setError(requestError.message);
+        }
+      } finally {
+        if (active) {
+          setLoading(false);
+        }
+      }
+    };
+
+    loadStudents();
+
+    return () => {
+      active = false;
+    };
+  }, [search]);
 
   return (
     <div className="flex min-h-screen flex-col bg-[#F8FAFF]">
@@ -114,13 +67,21 @@ function Students() {
           </button>
         </div>
 
+        {error ? (
+          <div className="mx-auto mb-8 max-w-6xl px-4 text-red-600 sm:px-6">{error}</div>
+        ) : null}
+
+        {loading ? (
+          <div className="mx-auto mb-8 max-w-6xl px-4 text-slate-500 sm:px-6">Loading students...</div>
+        ) : null}
+
         <div className="mx-auto mb-20 grid max-w-6xl gap-6 px-4 sm:grid-cols-2 sm:px-6 lg:grid-cols-3">
-          {filtered.length === 0 ? (
+          {!loading && students.length === 0 ? (
             <p className="col-span-full text-center text-slate-400">
               No students found
             </p>
           ) : (
-            filtered.map((student, index) => (
+            students.map((student, index) => (
               <div
                 key={student.id}
                 className={`rounded-2xl bg-white p-6 text-center shadow transition hover:shadow-lg ${
@@ -156,12 +117,12 @@ function Students() {
                   <p className="text-sm font-bold text-blue-600">{student.earnings}</p>
                 </div>
 
-                <a
-                  href={`/portfolio/${student.id}`}
+                <Link
+                  to={`/portfolio/${student.id}`}
                   className="block rounded-lg bg-blue-600 py-2.5 font-semibold text-white"
                 >
                   View Portfolio
-                </a>
+                </Link>
               </div>
             ))
           )}

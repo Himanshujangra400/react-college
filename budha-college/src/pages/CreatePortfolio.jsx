@@ -1,14 +1,106 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import { createPortfolio } from "../lib/api";
 
 function CreatePortfolio() {
   const [activeTab, setActiveTab] = useState("profile");
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
+  const [form, setForm] = useState({
+    id: "",
+    name: "",
+    role: "Student Creator",
+    college: "Budha College",
+    department: "Fashion Design",
+    bio: "",
+    profileImg: "https://i.pravatar.cc/300",
+    portfolioUrl: "",
+    linkedin: "",
+    github: "",
+    contactEmail: "",
+  });
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setForm((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const buildId = (value) =>
+    value
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9\s-]/g, "")
+      .replace(/\s+/g, "-");
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setError("");
+    setMessage("");
+
+    const finalId = form.id.trim() || buildId(form.name);
+
+    if (!form.name.trim()) {
+      setError("Please enter student name");
+      return;
+    }
+
+    if (!finalId) {
+      setError("Please enter a valid portfolio id or name");
+      return;
+    }
+
+    try {
+      setLoading(true);
+
+      const payload = {
+        id: finalId,
+        name: form.name.trim(),
+        role: form.role.trim(),
+        college: form.college.trim(),
+        bio:
+          form.bio.trim() ||
+          `${form.name.trim()} from ${form.department} builds projects and actively contributes to student portfolio work.`,
+        profileImg: form.profileImg.trim(),
+        stats: [
+          form.department,
+          form.contactEmail ? `Contact: ${form.contactEmail}` : "Open for collaboration",
+          "New portfolio",
+        ],
+        projects: [
+          {
+            id: 1,
+            title: "Portfolio Starter Project",
+            desc:
+              form.portfolioUrl.trim() ||
+              "Project details will be updated by the student.",
+            img: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=600",
+            meta: "Recently published",
+          },
+        ],
+      };
+
+      const response = await createPortfolio(payload);
+      setMessage(response.message || "Portfolio saved successfully");
+      navigate(`/portfolio/${finalId}`);
+    } catch (requestError) {
+      setError(requestError.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-[#F8FAFF] text-slate-900">
       <Navbar />
 
       <main className="mx-auto max-w-7xl px-4 pb-20 pt-8 sm:px-6 lg:px-12">
+        <form onSubmit={handleSubmit}>
         <p className="mb-2 text-xs font-medium text-slate-400">
           Home &gt; <span className="font-bold text-slate-800">Create Portfolio</span>
         </p>
@@ -106,9 +198,42 @@ function CreatePortfolio() {
                     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                       <div>
                         <label className="mb-2 block text-xs font-bold uppercase text-slate-500">
+                          Student Name
+                        </label>
+                        <input
+                          type="text"
+                          name="name"
+                          value={form.name}
+                          onChange={handleChange}
+                          placeholder="Enter full name"
+                          className="w-full rounded-2xl bg-slate-50 px-6 py-4 outline-none focus:ring-2 focus:ring-blue-100"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="mb-2 block text-xs font-bold uppercase text-slate-500">
+                          Portfolio Id
+                        </label>
+                        <input
+                          type="text"
+                          name="id"
+                          value={form.id}
+                          onChange={handleChange}
+                          placeholder="e.g. himanshu"
+                          className="w-full rounded-2xl bg-slate-50 px-6 py-4 outline-none focus:ring-2 focus:ring-blue-100"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="mb-2 block text-xs font-bold uppercase text-slate-500">
                           College
                         </label>
-                        <select className="w-full rounded-2xl bg-slate-50 px-6 py-4 outline-none focus:ring-2 focus:ring-blue-100">
+                        <select
+                          name="college"
+                          value={form.college}
+                          onChange={handleChange}
+                          className="w-full rounded-2xl bg-slate-50 px-6 py-4 outline-none focus:ring-2 focus:ring-blue-100"
+                        >
                           <option>Budha College</option>
                         </select>
                       </div>
@@ -117,10 +242,43 @@ function CreatePortfolio() {
                         <label className="mb-2 block text-xs font-bold uppercase text-slate-500">
                           Department
                         </label>
-                        <select className="w-full rounded-2xl bg-slate-50 px-6 py-4 outline-none focus:ring-2 focus:ring-blue-100">
+                        <select
+                          name="department"
+                          value={form.department}
+                          onChange={handleChange}
+                          className="w-full rounded-2xl bg-slate-50 px-6 py-4 outline-none focus:ring-2 focus:ring-blue-100"
+                        >
                           <option>Fashion Design</option>
                           <option>BCA</option>
                         </select>
+                      </div>
+
+                      <div>
+                        <label className="mb-2 block text-xs font-bold uppercase text-slate-500">
+                          Role
+                        </label>
+                        <input
+                          type="text"
+                          name="role"
+                          value={form.role}
+                          onChange={handleChange}
+                          placeholder="e.g. Full Stack Developer"
+                          className="w-full rounded-2xl bg-slate-50 px-6 py-4 outline-none focus:ring-2 focus:ring-blue-100"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="mb-2 block text-xs font-bold uppercase text-slate-500">
+                          Profile Image URL
+                        </label>
+                        <input
+                          type="text"
+                          name="profileImg"
+                          value={form.profileImg}
+                          onChange={handleChange}
+                          placeholder="https://..."
+                          className="w-full rounded-2xl bg-slate-50 px-6 py-4 outline-none focus:ring-2 focus:ring-blue-100"
+                        />
                       </div>
                     </div>
 
@@ -128,10 +286,14 @@ function CreatePortfolio() {
                       <p className="text-sm font-semibold text-slate-700">
                         Portfolio headline preview
                       </p>
-                      <p className="mt-2 text-lg font-bold text-slate-900">
-                        Product-minded student designer building polished brand
-                        systems and sellable work
-                      </p>
+                      <textarea
+                        name="bio"
+                        value={form.bio}
+                        onChange={handleChange}
+                        rows={4}
+                        placeholder="Write a short bio for your portfolio"
+                        className="mt-2 w-full rounded-xl bg-white p-3 text-sm text-slate-700 outline-none focus:ring-2 focus:ring-blue-100"
+                      />
                     </div>
                   </div>
                 </div>
@@ -203,29 +365,55 @@ function CreatePortfolio() {
                 <div className="grid gap-4 sm:grid-cols-2">
                   <input
                     type="text"
+                    name="portfolioUrl"
+                    value={form.portfolioUrl}
+                    onChange={handleChange}
                     placeholder="Portfolio URL"
                     className="rounded-2xl bg-slate-50 px-5 py-4 outline-none focus:ring-2 focus:ring-blue-100"
                   />
                   <input
                     type="text"
+                    name="linkedin"
+                    value={form.linkedin}
+                    onChange={handleChange}
                     placeholder="LinkedIn Profile"
                     className="rounded-2xl bg-slate-50 px-5 py-4 outline-none focus:ring-2 focus:ring-blue-100"
                   />
                   <input
                     type="text"
+                    name="github"
+                    value={form.github}
+                    onChange={handleChange}
                     placeholder="GitHub or Behance"
                     className="rounded-2xl bg-slate-50 px-5 py-4 outline-none focus:ring-2 focus:ring-blue-100"
                   />
                   <input
                     type="email"
+                    name="contactEmail"
+                    value={form.contactEmail}
+                    onChange={handleChange}
                     placeholder="Contact Email"
                     className="rounded-2xl bg-slate-50 px-5 py-4 outline-none focus:ring-2 focus:ring-blue-100"
                   />
+                </div>
+
+                <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="rounded-xl bg-blue-600 px-6 py-3 font-semibold text-white disabled:opacity-60"
+                  >
+                    {loading ? "Publishing..." : "Publish Portfolio"}
+                  </button>
+
+                  {error ? <p className="text-sm font-semibold text-red-600">{error}</p> : null}
+                  {message ? <p className="text-sm font-semibold text-green-600">{message}</p> : null}
                 </div>
               </div>
             )}
           </div>
         </div>
+        </form>
       </main>
 
       <div className="border-t border-slate-100 bg-white py-6">

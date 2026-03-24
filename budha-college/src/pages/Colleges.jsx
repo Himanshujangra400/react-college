@@ -1,4 +1,5 @@
 import Navbar from "../components/Navbar";
+import { Link } from "react-router-dom";
 
 function Colleges() {
   const colleges = [
@@ -130,12 +131,12 @@ function Colleges() {
                 <div className="flex flex-col items-start gap-4 border-t border-slate-100 pt-6 sm:flex-row sm:items-center sm:justify-between sm:pt-8">
                   <span className="text-base text-slate-500 sm:text-lg">Karnal, Haryana</span>
 
-                  <a
-                    href={college.link}
+                  <Link
+                    to={college.link}
                     className="w-full rounded-xl bg-blue-600 px-8 py-3 text-center font-bold text-white transition hover:bg-blue-700 sm:w-auto"
                   >
                     Explore Departments
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>

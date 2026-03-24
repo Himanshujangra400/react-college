@@ -1,0 +1,249 @@
+{
+  "users": [
+    {
+      "id": "u1",
+      "name": "Demo User",
+      "email": "demo@eduvault.in",
+      "password": "demo123"
+    }
+  ],
+  "products": [
+    {
+      "id": "p1",
+      "title": "SaaS Admin Dashboard",
+      "cat": "Web Development",
+      "price": "Rs. 499",
+      "seller": "Gavi",
+      "college": "Budha College",
+      "img": "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=600",
+      "studentImg": "https://i.pravatar.cc/100?img=1",
+      "badge": "Top Seller",
+      "sales": "12 sales",
+      "update": "Updated today",
+      "note": "Used by 3 student teams this month"
+    },
+    {
+      "id": "p2",
+      "title": "AI Assistant Interface",
+      "cat": "AI / ML",
+      "price": "Rs. 899",
+      "seller": "Devansh",
+      "college": "Budha College",
+      "img": "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600",
+      "studentImg": "https://i.pravatar.cc/100?img=2",
+      "badge": "Rising",
+      "sales": "7 sales",
+      "update": "Updated 2 days ago",
+      "note": "Prompt flows and UI kit included"
+    },
+    {
+      "id": "p3",
+      "title": "Floral Summer Dress",
+      "cat": "Fashion Design",
+      "price": "Rs. 249",
+      "seller": "Vanshika",
+      "college": "Budha College",
+      "img": "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?w=600",
+      "studentImg": "https://i.pravatar.cc/100?img=3",
+      "badge": "Verified",
+      "sales": "3 sales",
+      "update": "Updated yesterday",
+      "note": "Most saved fashion listing this week"
+    }
+  ],
+  "students": [
+    {
+      "id": "gavi",
+      "name": "Gavi",
+      "skill": "AI | Web Development",
+      "img": "https://i.ibb.co/yJk2vVn/1510f7e5-11ae-4eb9-8c01-b361ed4fd1a1.jpg",
+      "department": "BCA",
+      "projects": "4 projects live",
+      "sales": "12 sales",
+      "earnings": "Rs. 4,800 earned",
+      "status": "Top Seller",
+      "activity": "Active now"
+    },
+    {
+      "id": "arju",
+      "name": "Arju Sharma",
+      "skill": "Python | Machine Learning",
+      "img": "https://i.ibb.co/hRQdkBh7/Whats-App-Image-2025-05-15-at-11-49-46-AM.jpg",
+      "department": "BCA",
+      "projects": "3 projects live",
+      "sales": "5 sales",
+      "earnings": "Rs. 2,100 earned",
+      "status": "Rising",
+      "activity": "Updated yesterday"
+    },
+    {
+      "id": "gurmer",
+      "name": "Gurmer",
+      "skill": "Java | Data Structures",
+      "img": "https://i.ibb.co/svzNYHYy/9bbd2070-ddf0-4ebc-92ba-f695c16ea947.jpg",
+      "department": "BCA",
+      "projects": "2 projects live",
+      "sales": "3 sales",
+      "earnings": "Rs. 1,050 earned",
+      "status": "Verified",
+      "activity": "Updated 2 days ago"
+    },
+    {
+      "id": "himanshu",
+      "name": "Himanshu",
+      "skill": "C++ | HTML | CSS",
+      "img": "https://i.ibb.co/4Zf8zCRG/Whats-App-Image-2025-05-15-at-10-16-38-AM.jpg",
+      "department": "BCA",
+      "projects": "2 projects live",
+      "sales": "2 sales",
+      "earnings": "Rs. 900 earned",
+      "status": "Verified",
+      "activity": "Updated today"
+    },
+    {
+      "id": "devansh",
+      "name": "Devansh",
+      "skill": "Full Stack Development",
+      "img": "https://i.ibb.co/jv5f9YRB/3ffbfc35-bc30-4ed4-8eb9-f923f8f1638a.jpg",
+      "department": "BCA",
+      "projects": "3 projects live",
+      "sales": "7 sales",
+      "earnings": "Rs. 3,250 earned",
+      "status": "Rising",
+      "activity": "Updated 3 days ago"
+    },
+    {
+      "id": "robin",
+      "name": "Robin",
+      "skill": "React | JavaScript",
+      "img": "https://i.ibb.co/kVhTqPpb/IMG-20250515-101417-1.jpg",
+      "department": "BCA",
+      "projects": "1 project live",
+      "sales": "1 sale",
+      "earnings": "Rs. 350 earned",
+      "status": "New",
+      "activity": "Just joined marketplace"
+    }
+  ],
+  "topStudents": [
+    {
+      "rank": 1,
+      "name": "Gavi",
+      "img": "https://i.ibb.co/yJk2vVn/1510f7e5-11ae-4eb9-8c01-b361ed4fd1a1.jpg",
+      "sales": "12 Sales",
+      "earning": "Rs. 4,800",
+      "projects": "4 projects live",
+      "badge": "Top Seller",
+      "updated": "Updated today",
+      "id": "gavi"
+    },
+    {
+      "rank": 2,
+      "name": "Robin",
+      "img": "https://i.ibb.co/kVhTqPpb/IMG-20250515-101417-1.jpg",
+      "sales": "5 Sales",
+      "earning": "Rs. 1,450",
+      "projects": "2 projects live",
+      "badge": "Rising",
+      "updated": "Updated yesterday",
+      "id": "robin"
+    },
+    {
+      "rank": 3,
+      "name": "Himanshu",
+      "img": "https://i.ibb.co/4Zf8zCRG/Whats-App-Image-2025-05-15-at-10-16-38-AM.jpg",
+      "sales": "3 Sales",
+      "earning": "Rs. 980",
+      "projects": "2 projects live",
+      "badge": "Verified",
+      "updated": "Updated 2 days ago",
+      "id": "himanshu"
+    }
+  ],
+  "portfolios": {
+    "gavi": {
+      "name": "Gavi",
+      "role": "AI & Frontend Developer",
+      "college": "Budha College",
+      "bio": "I build student-first products with fast React interfaces, practical AI integrations, and clean portfolio storytelling that non-technical reviewers can actually follow.",
+      "profileImg": "https://i.ibb.co/yJk2vVn/1510f7e5-11ae-4eb9-8c01-b361ed4fd1a1.jpg",
+      "stats": [
+        "4 projects live",
+        "12 sales",
+        "Rs. 4,800 earned"
+      ],
+      "projects": [
+        {
+          "id": 1,
+          "title": "SaaS Admin Dashboard",
+          "desc": "A clean admin workflow with billing states, user tables, and real status handling.",
+          "img": "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=600",
+          "meta": "Top Seller | Updated today"
+        },
+        {
+          "id": 2,
+          "title": "AI Campus Assistant",
+          "desc": "AI-powered student support assistant built for department FAQs and admission queries.",
+          "img": "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600",
+          "meta": "7 saves this week | 3 sales"
+        }
+      ]
+    },
+    "arju": {
+      "name": "Arju Sharma",
+      "role": "Python & ML Developer",
+      "college": "Budha College",
+      "bio": "I enjoy turning messy datasets into products that feel simple. Most of my recent work blends machine learning with practical dashboards and review-friendly writeups.",
+      "profileImg": "https://i.ibb.co/hRQdkBh7/Whats-App-Image-2025-05-15-at-11-49-46-AM.jpg",
+      "stats": [
+        "3 projects live",
+        "5 sales",
+        "Rs. 2,100 earned"
+      ],
+      "projects": [
+        {
+          "id": 1,
+          "title": "Attendance Prediction Model",
+          "desc": "Predictive workflow for student attendance trends with export-ready charts.",
+          "img": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600",
+          "meta": "Rising | Updated yesterday"
+        },
+        {
+          "id": 2,
+          "title": "ML Hiring Screen",
+          "desc": "A small ML screening demo that helps shortlist profiles faster for campus roles.",
+          "img": "https://images.unsplash.com/photo-1526379095098-d400fd0bf935?w=600",
+          "meta": "2 live reviews | 2 sales"
+        }
+      ]
+    },
+    "himanshu": {
+      "name": "Himanshu",
+      "role": "Full Stack Developer",
+      "college": "Budha College",
+      "bio": "Passionate about building modern web apps that are easy to use, easy to demo, and polished enough to show up well in recruiter reviews.",
+      "profileImg": "https://i.ibb.co/4Zf8zCRG/Whats-App-Image-2025-05-15-at-10-16-38-AM.jpg",
+      "stats": [
+        "2 projects live",
+        "3 sales",
+        "Rs. 980 earned"
+      ],
+      "projects": [
+        {
+          "id": 1,
+          "title": "E-Commerce Website",
+          "desc": "Full-stack shopping platform with product management, cart flow, and payment integration.",
+          "img": "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600",
+          "meta": "Verified | Updated 2 days ago"
+        },
+        {
+          "id": 2,
+          "title": "AI Chatbot",
+          "desc": "AI-powered chatbot with conversation history, prompt refinement, and clean UI states.",
+          "img": "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600",
+          "meta": "2 sales | 14 saves"
+        }
+      ]
+    }
+  }
+}
